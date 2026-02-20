@@ -26,7 +26,7 @@
   --shadow: 0 2px 10px rgba(30,61,15,0.07);
   --shadow-lg: 0 8px 28px rgba(30,61,15,0.13);
   --header-h: 60px;
-  --bottom-nav-h: 64px;
+  --bottom-nav-h: 72px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -257,15 +257,18 @@ header {
   bottom: 0; left: 0; right: 0;
   height: var(--bottom-nav-h);
   background: var(--accent);
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 2px solid rgba(143,207,90,0.3);
   z-index: 100;
-  flex-shrink: 0;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
 }
 
 .bottom-nav-inner {
   display: flex;
   height: 100%;
   align-items: stretch;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .bnav-item {
@@ -274,44 +277,61 @@ header {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 5px;
   cursor: pointer;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.45);
   transition: all 0.15s;
   position: relative;
   border: none;
   background: transparent;
   font-family: 'Outfit', sans-serif;
   -webkit-tap-highlight-color: transparent;
+  padding: 8px 0;
 }
 
-.bnav-item.active { color: white; }
-.bnav-item.active::after {
+.bnav-item.active {
+  color: white;
+  background: rgba(255,255,255,0.08);
+}
+
+.bnav-item.active::before {
   content: '';
   position: absolute;
-  bottom: 0; left: 20%; right: 20%;
+  top: 0; left: 15%; right: 15%;
   height: 3px;
   background: #8fcf5a;
-  border-radius: 2px 2px 0 0;
+  border-radius: 0 0 4px 4px;
 }
 
-.bnav-icon { font-size: 1.3rem; line-height: 1; position: relative; }
-.bnav-label { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.3px; }
+.bnav-icon {
+  font-size: 1.55rem;
+  line-height: 1;
+  position: relative;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+}
+
+.bnav-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
 
 .bnav-badge {
   position: absolute;
-  top: -4px; right: -8px;
+  top: 6px; right: calc(50% - 22px);
   background: var(--amber);
   color: white;
-  border-radius: 8px;
+  border-radius: 9px;
   padding: 0 5px;
-  font-size: 0.6rem;
+  font-size: 0.62rem;
   font-family: 'JetBrains Mono', monospace;
-  font-weight: 600;
-  min-width: 16px;
+  font-weight: 700;
+  min-width: 18px;
   text-align: center;
-  line-height: 16px;
-  height: 16px;
+  line-height: 18px;
+  height: 18px;
+  border: 2px solid var(--accent);
 }
 
 /* ===================== VIEWS ===================== */
@@ -390,6 +410,21 @@ header {
 .stat-sub { font-size: 0.7rem; color: var(--muted); margin-top: 3px; }
 .stat-card.warn .stat-value { color: var(--amber); }
 .stat-card.danger .stat-value { color: var(--red); }
+
+.stat-clickable {
+  cursor: pointer;
+  transition: all 0.18s;
+  user-select: none;
+}
+.stat-clickable:hover {
+  border-color: var(--accent-mid);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+.stat-clickable:active { transform: translateY(0); }
+.stat-clickable .stat-sub { color: var(--accent-mid); font-weight: 500; }
+.stat-card.warn.stat-clickable:hover { border-color: var(--amber); }
+.stat-card.danger.stat-clickable:hover { border-color: var(--red); }
 
 /* ===================== ORDER PANEL ===================== */
 .order-form-card {
@@ -568,6 +603,95 @@ header {
 .order-result.added .order-result-title { color: var(--amber); }
 .order-result p { color: var(--text2); line-height: 1.5; font-size: 0.84rem; }
 
+/* ===================== TARTAN ===================== */
+
+.tartan-colors {
+  padding: 14px 16px;
+  background: var(--accent-bg);
+  border: 1.5px solid rgba(45,90,24,0.2);
+  border-radius: 9px;
+  animation: slideUp 0.2s ease;
+}
+
+.tartan-colors-auto {
+  border-color: var(--amber);
+  background: var(--amber-bg);
+  position: relative;
+}
+
+.tartan-colors-auto::before {
+  content: '';
+  position: absolute;
+  top: -6px; left: 16px;
+  width: 10px; height: 10px;
+  background: var(--amber-bg);
+  border-left: 1.5px solid var(--amber);
+  border-top: 1.5px solid var(--amber);
+  transform: rotate(45deg);
+}
+
+.tartan-colors-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text2);
+  margin-bottom: 12px;
+}
+
+.tartan-dots {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tartan-dot {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  transition: all 0.15s;
+  position: relative;
+  flex-shrink: 0;
+}
+.tartan-dot:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+.tartan-dot.selected {
+  border-color: var(--text);
+  transform: scale(1.18);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+}
+.tartan-dot.selected::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.tartan-selected-name {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-mid);
+  min-height: 18px;
+}
+
+.queue-chip.tartan {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: white;
+  font-weight: 700;
+}
+
+
 /* ===================== QUEUE ===================== */
 .queue-list { display: flex; flex-direction: column; gap: 10px; }
 
@@ -583,6 +707,102 @@ header {
 @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 .queue-item.done { opacity: 0.45; border-style: dashed; }
+/* ===================== STATUS BADGES ===================== */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+
+.status-nowe       { background: #e8f4fd; color: #1565c0; border: 1.5px solid #90caf9; }
+.status-w-produkcji { background: #fff8e1; color: #e65100; border: 1.5px solid #ffcc02; }
+.status-tartanowanie { background: #f3e5f5; color: #6a1b9a; border: 1.5px solid #ce93d8; }
+.status-zakonczone  { background: #e8f5e9; color: #1b5e20; border: 1.5px solid #81c784; }
+
+.status-badge:hover { filter: brightness(0.92); transform: scale(1.03); }
+
+/* STATUS MENU */
+.status-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: var(--surface);
+  border: 1.5px solid var(--border2);
+  border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  z-index: 300;
+  min-width: 200px;
+  overflow: hidden;
+  animation: slideUp 0.15s ease;
+}
+
+.status-menu-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.1s;
+  border-bottom: 1px solid var(--border);
+}
+.status-menu-item:last-child { border-bottom: none; }
+.status-menu-item:hover { background: var(--card); }
+.status-menu-item.active { font-weight: 700; }
+.status-wrap { position: relative; display: inline-block; }
+
+/* SIZE GROUP HEADERS */
+.size-group-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 10px;
+}
+
+.size-group-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+.size-group-badge {
+  background: var(--accent);
+  color: white;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.size-group-badge.tartan { background: #6a1b9a; }
+.size-group-badge.standard { background: var(--accent-mid); }
+
+.size-group-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* QUEUE ITEM — status border accent */
+.queue-item.status-w-produkcji  { border-left: 3px solid #ffcc02; }
+.queue-item.status-tartanowanie { border-left: 3px solid #ce93d8; }
+.queue-item.status-zakonczone   { border-left: 3px solid #81c784; opacity: 0.6; }
+.queue-item.status-nowe         { border-left: 3px solid #90caf9; }
+
 
 .qi-top {
   display: flex;
@@ -808,6 +1028,7 @@ tr:hover td { background: var(--card); }
 }
 
 @keyframes notifIn { from { opacity:0; transform: translateX(-50%) translateY(10px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+@keyframes tartanPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); box-shadow: 0 0 0 4px rgba(184,110,16,0.4); } }
 
 .notification.warn { background: var(--amber); }
 .notification.error { background: var(--red); }
@@ -845,17 +1066,532 @@ tr:hover td { background: var(--card); }
   .stats-row { grid-template-columns: repeat(4, 1fr); }
   .order-desktop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .modal-overlay { align-items: center; padding: 20px; }
-  .modal { border-radius: 16px; max-width: 480px; }
+  .modal { border-radius: 16px; max-width: 560px; }
   @keyframes sheetUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
   .modal-handle { display: none; }
   .notification { bottom: 24px; }
 }
 
 @media (max-width: 767px) {
-  .bottom-nav { display: flex; }
+  .bottom-nav { display: block; }
   .desktop-nav { display: none; }
   header { padding: 0 16px; }
-  .main-scroll { padding: 16px 16px calc(var(--bottom-nav-h) + 16px); }
+  .main-scroll { padding: 16px 16px calc(var(--bottom-nav-h) + 20px); }
+  .order-desktop-grid { display: block; }
+  .order-desktop-grid > .order-form-card:first-child { margin-bottom: 16px; }
+}
+
+
+/* ===================== QUEUE FILTER BAR ===================== */
+.queue-filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+  border: 1.5px solid var(--border2);
+  background: var(--surface);
+  color: var(--muted);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.filter-btn:hover { border-color: var(--accent-mid); color: var(--text); }
+.filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.filter-btn .filter-count {
+  background: rgba(255,255,255,0.25);
+  border-radius: 10px;
+  padding: 0 6px;
+  font-size: 0.68rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+.filter-btn:not(.active) .filter-count {
+  background: var(--card);
+  color: var(--muted);
+}
+
+/* Fix size-group badge — no color confusion */
+.size-group-badge {
+  background: var(--text2) !important;
+  color: white !important;
+}
+.size-group-badge.tartan { background: var(--text2) !important; }
+.size-group-badge.standard { background: var(--text2) !important; }
+
+/* Queue item clickable */
+.queue-item-clickable {
+  cursor: pointer;
+}
+.queue-item-clickable:hover {
+  border-color: var(--accent-mid) !important;
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===================== ORDER DETAIL MODAL ===================== */
+#modal-order .modal { max-width: 540px; }
+
+.order-detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.order-detail-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.order-detail-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.order-detail-section {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.order-detail-section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.order-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+}
+.order-detail-row:last-child { border-bottom: none; }
+.order-detail-row .odr-label { color: var(--muted); font-size: 0.78rem; }
+.order-detail-row .odr-value { font-weight: 600; }
+
+.order-notes-area {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  color: var(--text);
+  background: var(--bg);
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  transition: border-color 0.18s;
+  -webkit-appearance: none;
+}
+.order-notes-area:focus { border-color: var(--accent); }
+
+/* Status change inside detail modal */
+.status-select-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.status-option-btn {
+  flex: 1;
+  min-width: 100px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  text-align: center;
+  transition: all 0.15s;
+  color: var(--muted);
+}
+.status-option-btn.active-status { color: white; }
+.status-option-btn[data-s="nowe"].active-status        { background: #1565c0; border-color: #1565c0; }
+.status-option-btn[data-s="w-produkcji"].active-status { background: #e65100; border-color: #e65100; }
+.status-option-btn[data-s="tartanowanie"].active-status{ background: #6a1b9a; border-color: #6a1b9a; }
+.status-option-btn[data-s="zakonczone"].active-status  { background: #1b5e20; border-color: #1b5e20; }
+.status-option-btn:hover:not(.active-status) { border-color: var(--text2); color: var(--text); }
+
+/* Plywood dimensions in catalog */
+.plywood-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+.plywood-item label {
+  font-size: 0.68rem !important;
+  color: var(--muted) !important;
+  margin-bottom: 3px;
+}
+.plywood-dim-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.plywood-dim-row input {
+  flex: 1;
+  font-size: 0.82rem !important;
+  padding: 8px 10px !important;
+  text-align: center;
+}
+.plywood-dim-sep {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+
+/* ===================== POS BUTTON (header) ===================== */
+.btn-pos {
+  background: linear-gradient(135deg, #c47c1a, #e8960f);
+  color: white;
+  border: none;
+  border-radius: 9px;
+  padding: 7px 14px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(196,124,26,0.35);
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.btn-pos:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(196,124,26,0.45); }
+.btn-pos:active { transform: translateY(0); }
+
+/* ===================== POS MODAL ===================== */
+#modal-pos .modal {
+  max-width: 700px;
+  max-height: 92vh;
+}
+
+/* POS layout: left = products, right = basket + client */
+.pos-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  min-height: 500px;
+  max-height: calc(92vh - 120px);
+}
+
+@media (max-width: 767px) {
+  .pos-layout { grid-template-columns: 1fr; max-height: none; }
+  #modal-pos .modal { max-width: 100%; }
+}
+
+.pos-products {
+  padding: 16px;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+}
+
+.pos-right {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pos-basket {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pos-client {
+  padding: 14px 16px;
+  background: var(--card);
+  flex-shrink: 0;
+}
+
+/* Product search */
+.pos-search {
+  position: relative;
+  margin-bottom: 12px;
+}
+.pos-search input {
+  width: 100%;
+  padding: 9px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  background: var(--surface);
+  outline: none;
+  color: var(--text);
+  -webkit-appearance: none;
+}
+.pos-search input:focus { border-color: var(--accent); }
+
+/* Product grid */
+.pos-product-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pos-product-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.15s;
+  gap: 10px;
+}
+.pos-product-row:hover { border-color: var(--accent-mid); background: var(--accent-bg); }
+.pos-product-row.out-of-stock { opacity: 0.5; }
+
+.pos-product-info { flex: 1; min-width: 0; }
+.pos-product-name { font-weight: 600; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pos-product-sku  { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--accent-mid); }
+.pos-product-stock { font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; color: var(--muted); white-space: nowrap; }
+
+.pos-add-btn {
+  width: 28px; height: 28px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.pos-add-btn:hover { background: var(--accent-light); }
+
+/* Basket */
+.pos-basket-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pos-basket-empty {
+  text-align: center;
+  padding: 24px 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.pos-basket-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.pos-basket-item:last-child { border-bottom: none; }
+
+.pos-basket-item-info { flex: 1; min-width: 0; }
+.pos-basket-item-name { font-size: 0.82rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pos-basket-item-sku { font-size: 0.65rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+.pos-basket-item-tartan { font-size: 0.65rem; font-weight: 600; margin-top: 2px; }
+
+.pos-qty-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.pos-qty-ctrl button {
+  width: 24px; height: 24px;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text2);
+  transition: background 0.1s;
+}
+.pos-qty-ctrl button:hover { background: var(--card); }
+.pos-qty-ctrl span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+.pos-remove-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.1s;
+  flex-shrink: 0;
+}
+.pos-remove-btn:hover { color: var(--red); }
+
+/* Tartan dots in basket */
+.pos-tartan-dots {
+  display: flex;
+  gap: 5px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.pos-tartan-dot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.1s;
+  flex-shrink: 0;
+}
+.pos-tartan-dot:hover { transform: scale(1.15); }
+.pos-tartan-dot.selected { border-color: var(--text); transform: scale(1.15); }
+
+/* Client section toggle */
+.pos-client-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 0;
+  user-select: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text2);
+}
+.pos-client-toggle-check {
+  width: 18px; height: 18px;
+  border-radius: 5px;
+  border: 2px solid var(--border2);
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem;
+  color: white;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.pos-client-toggle-check.on { background: var(--accent-mid); border-color: var(--accent-mid); }
+.pos-client-fields { display: none; margin-top: 10px; }
+.pos-client-fields.visible { display: block; }
+
+.pos-client-fields .form-group { margin-bottom: 8px; }
+.pos-client-fields .form-group:last-child { margin-bottom: 0; }
+.pos-client-fields label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 3px;
+}
+.pos-client-fields input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  -webkit-appearance: none;
+}
+.pos-client-fields input:focus { border-color: var(--accent); }
+
+/* Prio in pos basket */
+.pos-prio-select {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+.pos-prio-btn {
+  flex: 1;
+  padding: 3px 6px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--muted);
+  text-align: center;
+  transition: all 0.12s;
+  font-family: 'Outfit', sans-serif;
+}
+.pos-prio-btn.sel-1 { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+.pos-prio-btn.sel-2 { background: var(--amber-bg); border-color: var(--amber); color: var(--amber); }
+.pos-prio-btn.sel-3 { background: var(--accent-bg); border-color: var(--accent-mid); color: var(--accent-mid); }
+
+/* POS Orders list view */
+.pos-order-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+}
+.pos-order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  gap: 10px;
+}
+.pos-order-client-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+.pos-order-meta { font-size: 0.72rem; color: var(--muted); }
+.pos-order-items { display: flex; flex-direction: column; gap: 4px; }
+.pos-order-item-row {
+  font-size: 0.82rem;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--text2);
 }
 
 /* SCROLLBAR */
@@ -905,9 +1641,13 @@ tr:hover td { background: var(--card); }
       <button class="nav-tab" onclick="switchView('stock')" id="tab-stock" data-role="biuro">
         🏭 Magazyn
       </button>
+      <button class="nav-tab" onclick="switchView('pos-orders')" id="tab-pos-orders">
+        🛒 Zamówienia POS
+      </button>
     </nav>
 
     <div class="header-right">
+      <button class="btn-pos" onclick="openPOS()">🛒 POS</button>
       <div class="user-pill">
         <span class="user-pill-icon" id="user-icon">💼</span>
         <span id="user-name-header">Biuro</span>
@@ -929,25 +1669,25 @@ tr:hover td { background: var(--card); }
       </div>
 
       <div class="stats-row" id="stats-row">
-        <div class="stat-card">
+        <div class="stat-card stat-clickable" onclick="switchView('catalog')" title="Przejdź do katalogu">
           <div class="stat-label">Produkty</div>
           <div class="stat-value" id="stat-products">0</div>
-          <div class="stat-sub">w katalogu</div>
+          <div class="stat-sub">w katalogu →</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card stat-clickable" onclick="switchView('stock')" title="Przejdź do magazynu">
           <div class="stat-label">Na stanie</div>
           <div class="stat-value" id="stat-instock">0</div>
-          <div class="stat-sub">gotowe</div>
+          <div class="stat-sub">gotowe →</div>
         </div>
-        <div class="stat-card warn">
+        <div class="stat-card warn stat-clickable" onclick="switchView('queue')" title="Przejdź do kolejki">
           <div class="stat-label">Kolejka</div>
           <div class="stat-value" id="stat-queue">0</div>
-          <div class="stat-sub">do produkcji</div>
+          <div class="stat-sub">do produkcji →</div>
         </div>
-        <div class="stat-card danger">
+        <div class="stat-card danger stat-clickable" onclick="switchView('stock')" title="Przejdź do magazynu">
           <div class="stat-label">Brak towaru</div>
           <div class="stat-value" id="stat-outofstock">0</div>
-          <div class="stat-sub">produktów</div>
+          <div class="stat-sub">produktów →</div>
         </div>
       </div>
 
@@ -976,6 +1716,21 @@ tr:hover td { background: var(--card); }
             <div class="form-group">
               <label>Termin (opcjonalnie)</label>
               <input type="date" id="order-deadline">
+            </div>
+          </div>
+
+
+          <div class="form-group" id="tartan-group" style="display:none">
+            <div class="tartan-colors tartan-colors-auto">
+              <div class="tartan-colors-label">🏴 Podest z tartanem — wybierz kolor:</div>
+              <div class="tartan-dots">
+                <div class="tartan-dot" data-color="Różowy" data-hex="#e91e8c" style="background:#e91e8c" onclick="selectTartan(this)" title="Różowy"></div>
+                <div class="tartan-dot" data-color="Niebieski" data-hex="#1565c0" style="background:#1565c0" onclick="selectTartan(this)" title="Niebieski"></div>
+                <div class="tartan-dot" data-color="Pomarańczowy" data-hex="#e65100" style="background:#e65100" onclick="selectTartan(this)" title="Pomarańczowy"></div>
+                <div class="tartan-dot" data-color="Fioletowy" data-hex="#6a1b9a" style="background:#6a1b9a" onclick="selectTartan(this)" title="Fioletowy"></div>
+                <div class="tartan-dot" data-color="Czerwony" data-hex="#c62828" style="background:#c62828" onclick="selectTartan(this)" title="Czerwony"></div>
+              </div>
+              <div class="tartan-selected-name" id="tartan-selected-name"></div>
             </div>
           </div>
 
@@ -1016,6 +1771,23 @@ tr:hover td { background: var(--card); }
           <div class="page-subtitle">Zlecenia do wyprodukowania</div>
         </div>
         <button class="btn btn-secondary btn-sm" onclick="clearDoneQueue()">🗑 Usuń ukończone</button>
+      </div>
+      <div class="queue-filter-bar" id="queue-filter-bar">
+        <button class="filter-btn active" data-filter="wszystkie" onclick="setQueueFilter('wszystkie')">
+          Wszystkie <span class="filter-count" id="fc-wszystkie">0</span>
+        </button>
+        <button class="filter-btn" data-filter="nowe" onclick="setQueueFilter('nowe')">
+          🆕 Nowe <span class="filter-count" id="fc-nowe">0</span>
+        </button>
+        <button class="filter-btn" data-filter="w-produkcji" onclick="setQueueFilter('w-produkcji')">
+          ⚙ W produkcji <span class="filter-count" id="fc-w-produkcji">0</span>
+        </button>
+        <button class="filter-btn" data-filter="tartanowanie" onclick="setQueueFilter('tartanowanie')">
+          🏴 Do tartanowania <span class="filter-count" id="fc-tartanowanie">0</span>
+        </button>
+        <button class="filter-btn" data-filter="zakonczone" onclick="setQueueFilter('zakonczone')">
+          ✅ Zakończone <span class="filter-count" id="fc-zakonczone">0</span>
+        </button>
       </div>
       <div id="queue-container"></div>
     </div>
@@ -1100,10 +1872,82 @@ tr:hover td { background: var(--card); }
         <div class="bnav-icon">🏭</div>
         <div class="bnav-label">Magazyn</div>
       </button>
+      <button class="bnav-item" onclick="switchView('pos-orders')" id="bnav-pos-orders">
+        <div class="bnav-icon">🛒</div>
+        <div class="bnav-label">POS</div>
+      </button>
     </div>
   </nav>
 
+
+    <!-- ===== POS ZAMÓWIENIA ===== -->
+    <div class="view" id="view-pos-orders">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Zamówienia POS</div>
+          <div class="page-subtitle">Zamówienia z targów i sprzedaży bezpośredniej</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openPOS()">+ Nowe zamówienie POS</button>
+      </div>
+      <div id="pos-orders-container"></div>
+    </div>
+
 </div><!-- /app-shell -->
+
+
+<!-- ==================== MODAL: POS ==================== -->
+<div class="modal-overlay" id="modal-pos" style="display:none" onclick="if(event.target===this)closeModal('modal-pos')">
+  <div class="modal" style="max-width:700px;border-radius:20px 20px 0 0;width:100%">
+    <div class="modal-handle"></div>
+    <div class="modal-header" style="padding-bottom:12px;border-bottom:1px solid var(--border)">
+      <div class="modal-title">🛒 POS — Nowe zamówienie</div>
+      <button class="modal-close" onclick="closeModal('modal-pos')">✕</button>
+    </div>
+    <div class="pos-layout">
+
+      <!-- LEFT: product list -->
+      <div class="pos-products">
+        <div class="pos-search">
+          <input type="text" id="pos-search" placeholder="Szukaj produktu po nazwie lub SKU..." oninput="renderPosProducts(this.value)" autocomplete="off">
+        </div>
+        <div class="pos-product-grid" id="pos-product-grid"></div>
+      </div>
+
+      <!-- RIGHT: basket + client -->
+      <div class="pos-right">
+        <div class="pos-basket">
+          <div class="pos-basket-title">
+            <span>Koszyk</span>
+            <span id="pos-basket-count" style="font-size:0.72rem;color:var(--muted);font-weight:500"></span>
+          </div>
+          <div id="pos-basket-list">
+            <div class="pos-basket-empty">Kliknij produkty aby dodać</div>
+          </div>
+        </div>
+
+        <div class="pos-client">
+          <div class="pos-client-toggle" onclick="togglePosClient()">
+            <div class="pos-client-toggle-check" id="pos-client-check"></div>
+            <span>Dane klienta (wysyłka)</span>
+          </div>
+          <div class="pos-client-fields" id="pos-client-fields">
+            <div class="form-group"><label>Imię i nazwisko</label><input type="text" id="pos-name" placeholder="Jan Kowalski"></div>
+            <div class="form-group"><label>Telefon</label><input type="tel" id="pos-phone" placeholder="+48 000 000 000"></div>
+            <div class="form-group"><label>Email</label><input type="email" id="pos-email" placeholder="jan@email.com"></div>
+            <div class="form-group"><label>Adres dostawy</label><input type="text" id="pos-address" placeholder="ul. Przykładowa 1, 00-000 Warszawa"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer" style="border-top:1px solid var(--border);padding-top:14px">
+      <button class="btn btn-secondary" onclick="closeModal('modal-pos')">Anuluj</button>
+      <button class="btn btn-primary" onclick="submitPosOrder()" style="background:linear-gradient(135deg,#c47c1a,#e8960f)">
+        ✓ Zatwierdź zamówienie POS
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- ==================== MODAL: PRODUKT ==================== -->
 <div class="modal-overlay" id="modal-product" style="display:none" onclick="if(event.target===this)closeModal('modal-product')">
@@ -1130,7 +1974,36 @@ tr:hover td { background: var(--card); }
       </div>
       <div class="form-group">
         <label>Opis (opcjonalnie)</label>
-        <input type="text" id="p-desc" placeholder="np. wymiary, materiał, kolor...">
+        <input type="text" id="p-desc" placeholder="np. materiał, kolor...">
+      </div>
+      <div class="form-group">
+        <label>Wymiary sklejki (cm) — Szerokość × Długość</label>
+        <div class="plywood-grid">
+          <div class="plywood-item">
+            <label>Element A</label>
+            <div class="plywood-dim-row">
+              <input type="number" id="p-a-w" placeholder="szer." min="0" step="0.1">
+              <span class="plywood-dim-sep">×</span>
+              <input type="number" id="p-a-l" placeholder="dł." min="0" step="0.1">
+            </div>
+          </div>
+          <div class="plywood-item">
+            <label>Element B</label>
+            <div class="plywood-dim-row">
+              <input type="number" id="p-b-w" placeholder="szer." min="0" step="0.1">
+              <span class="plywood-dim-sep">×</span>
+              <input type="number" id="p-b-l" placeholder="dł." min="0" step="0.1">
+            </div>
+          </div>
+          <div class="plywood-item">
+            <label>Wieko</label>
+            <div class="plywood-dim-row">
+              <input type="number" id="p-c-w" placeholder="szer." min="0" step="0.1">
+              <span class="plywood-dim-sep">×</span>
+              <input type="number" id="p-c-l" placeholder="dł." min="0" step="0.1">
+            </div>
+          </div>
+        </div>
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -1150,6 +2023,24 @@ tr:hover td { background: var(--card); }
   </div>
 </div>
 
+
+<!-- ==================== MODAL: ORDER DETAIL ==================== -->
+<div class="modal-overlay" id="modal-order" style="display:none" onclick="if(event.target===this)closeModal('modal-order')">
+  <div class="modal" style="max-width:540px">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-title">Szczegóły zlecenia</div>
+      <button class="modal-close" onclick="closeModal('modal-order')">✕</button>
+    </div>
+    <div class="modal-body" id="modal-order-body">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-order')">Zamknij</button>
+      <button class="btn btn-primary" onclick="saveOrderDetail()">💾 Zapisz notatki</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ============================================================
 // STATE
@@ -1159,9 +2050,51 @@ let queue = [];
 let orderHistory = [];
 let selectedPrio = 2;
 let editingProductId = null;
+let tartanActive = false;
+let tartanColor = null;
+let queueFilter = 'wszystkie';
+let detailOrderId = null; // { color: "Różowy", hex: "#e91e8c" }
 let currentUser = null; // 'biuro' | 'produkcja'
 let syncInterval = null;
 let catalogFilter = '';
+
+// ============================================================
+// STORAGE — localStorage (trwałe, działa na GitHubie)
+// Dane są wspólne dla obu użytkowników na tym samym urządzeniu/sieci
+// poprzez localStorage (każda przeglądarka trzyma swoje dane lokalnie)
+// ============================================================
+function loadData() {
+  try { const v = localStorage.getItem('sg-products'); if (v) products = JSON.parse(v); } catch(e) { products = []; }
+  try { const v = localStorage.getItem('sg-queue');    if (v) queue    = JSON.parse(v); } catch(e) { queue = []; }
+  try { const v = localStorage.getItem('sg-orders');   if (v) orderHistory = JSON.parse(v); } catch(e) { orderHistory = []; }
+  loadPosOrders();
+  render();
+}
+
+function save() {
+  try { localStorage.setItem('sg-products', JSON.stringify(products)); } catch(e){}
+  try { localStorage.setItem('sg-queue',    JSON.stringify(queue));    } catch(e){}
+  try { localStorage.setItem('sg-orders',   JSON.stringify(orderHistory)); } catch(e){}
+}
+
+function silentRefresh() {
+  // Odczytuje dane z localStorage — działa gdy obie osoby korzystają z tej samej przeglądarki/urządzenia
+  // lub gdy jedna osoba ma otwarte dwie karty
+  let changed = false;
+  try {
+    const v = localStorage.getItem('sg-products');
+    if (v) { const d = JSON.parse(v); if (JSON.stringify(d) !== JSON.stringify(products)) { products = d; changed = true; } }
+  } catch(e){}
+  try {
+    const v = localStorage.getItem('sg-queue');
+    if (v) { const d = JSON.parse(v); if (JSON.stringify(d) !== JSON.stringify(queue)) { queue = d; changed = true; } }
+  } catch(e){}
+  try {
+    const v = localStorage.getItem('sg-orders');
+    if (v) { const d = JSON.parse(v); if (JSON.stringify(d) !== JSON.stringify(orderHistory)) { orderHistory = d; changed = true; } }
+  } catch(e){}
+  if (changed) { render(); renderPosOrdersList(); }
+}
 
 // ============================================================
 // LOGIN / LOGOUT
@@ -1175,18 +2108,13 @@ function login(role) {
   document.getElementById('user-name-header').textContent = isProdukcja ? 'Produkcja' : 'Biuro';
   document.getElementById('user-icon').textContent = isProdukcja ? '🔨' : '💼';
 
-  // Jeśli produkcja — przełącz od razu na kolejkę
-  if (isProdukcja) {
-    switchView('queue');
-  } else {
-    switchView('orders');
-  }
+  if (isProdukcja) switchView('queue');
+  else switchView('orders');
 
   loadData();
 
-  // Auto-refresh co 10 sekund (synchronizacja danych między użytkownikami)
   clearInterval(syncInterval);
-  syncInterval = setInterval(silentRefresh, 10000);
+  syncInterval = setInterval(silentRefresh, 5000);
 }
 
 function logout() {
@@ -1194,53 +2122,6 @@ function logout() {
   currentUser = null;
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('app-shell').style.display = 'none';
-}
-
-// ============================================================
-// STORAGE (shared = true → wspólne dla obu użytkowników)
-// ============================================================
-async function loadData() {
-  try {
-    const pr = await window.storage.get('sg-products', true);
-    if (pr) products = JSON.parse(pr.value);
-  } catch(e) { products = []; }
-
-  try {
-    const qu = await window.storage.get('sg-queue', true);
-    if (qu) queue = JSON.parse(qu.value);
-  } catch(e) { queue = []; }
-
-  try {
-    const oh = await window.storage.get('sg-orders', true);
-    if (oh) orderHistory = JSON.parse(oh.value);
-  } catch(e) { orderHistory = []; }
-
-  render();
-}
-
-async function save() {
-  try { await window.storage.set('sg-products', JSON.stringify(products), true); } catch(e){}
-  try { await window.storage.set('sg-queue', JSON.stringify(queue), true); } catch(e){}
-  try { await window.storage.set('sg-orders', JSON.stringify(orderHistory), true); } catch(e){}
-}
-
-async function silentRefresh() {
-  // Cicho odświeża dane z serwera bez resetowania UI
-  let changed = false;
-  try {
-    const pr = await window.storage.get('sg-products', true);
-    if (pr) { const d = JSON.parse(pr.value); if (JSON.stringify(d) !== JSON.stringify(products)) { products = d; changed = true; } }
-  } catch(e){}
-  try {
-    const qu = await window.storage.get('sg-queue', true);
-    if (qu) { const d = JSON.parse(qu.value); if (JSON.stringify(d) !== JSON.stringify(queue)) { queue = d; changed = true; } }
-  } catch(e){}
-  try {
-    const oh = await window.storage.get('sg-orders', true);
-    if (oh) { const d = JSON.parse(oh.value); if (JSON.stringify(d) !== JSON.stringify(orderHistory)) { orderHistory = d; changed = true; } }
-  } catch(e){}
-
-  if (changed) { render(); }
 }
 
 // ============================================================
@@ -1270,6 +2151,7 @@ function render() {
   renderQueue();
   renderStock();
   renderRecentOrders();
+  renderPosOrdersList();
 }
 
 function renderStats() {
@@ -1330,12 +2212,39 @@ function renderCatalog(filter = '') {
   }).join('');
 }
 
+// Determine size group from SKU: XS, S, M, L, XL, XXL, then standard vs tartan
+const SIZE_ORDER = ['XS','S','M','L','XL','XXL'];
+
+function getSizeGroup(sku) {
+  const upper = sku.toUpperCase();
+  const isTartan = upper.includes('-T');
+  // Match size prefix
+  for (const size of ['XXL','XL','L','M','S','XS']) {
+    if (upper.startsWith(size + '-') || upper === size) {
+      return { size, isTartan, groupKey: size + (isTartan ? '-T' : '') };
+    }
+  }
+  return { size: 'INNE', isTartan, groupKey: 'INNE' + (isTartan ? '-T' : '') };
+}
+
 function renderQueue() {
   const container = document.getElementById('queue-container');
   if (!container) return;
-  const active = queue.filter(q => !q.done);
-  const done = queue.filter(q => q.done);
   const today = new Date(); today.setHours(0,0,0,0);
+
+  updateFilterCounts();
+
+  // Apply status filter
+  const filterFn = (q) => {
+    if (queueFilter === 'wszystkie') return true;
+    if (queueFilter === 'zakonczone') return q.done;
+    return !q.done && (q.status || 'nowe') === queueFilter;
+  };
+
+  const active = queue.filter(q => !q.done).filter(filterFn);
+  const done   = queueFilter === 'wszystkie' || queueFilter === 'zakonczone'
+    ? queue.filter(q => q.done)
+    : [];
 
   if (active.length === 0 && done.length === 0) {
     container.innerHTML = `<div class="empty">
@@ -1346,52 +2255,96 @@ function renderQueue() {
     return;
   }
 
+  // Group active items by size+type
+  const groups = {};
+  active.forEach(item => {
+    const g = getSizeGroup(item.sku);
+    if (!groups[g.groupKey]) groups[g.groupKey] = { ...g, items: [] };
+    groups[g.groupKey].items.push(item);
+  });
+
+  // Sort groups: sizes in order, standard before tartan
+  const sortedGroupKeys = Object.keys(groups).sort((a, b) => {
+    const ga = groups[a], gb = groups[b];
+    const ia = SIZE_ORDER.indexOf(ga.size);
+    const ib = SIZE_ORDER.indexOf(gb.size);
+    if (ia !== ib) return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+    return ga.isTartan ? 1 : -1;
+  });
+
   let html = '';
+  let globalIdx = 1;
 
   if (active.length > 0) {
-    html += `<div class="section-title" style="margin-bottom:14px">Do wyprodukowania (${active.length})</div>`;
-    html += `<div class="queue-list" style="margin-bottom:24px">`;
-    active.forEach((item, idx) => {
-      const posClass = item.priority === 1 ? 'high' : item.priority === 3 ? 'low' : '';
-      const isUrgent = item.deadline && new Date(item.deadline) < new Date(today.getTime() + 2 * 86400000);
-      html += `<div class="queue-item" id="qi-${item.id}">
-        <div class="qi-top">
-          <div class="queue-pos ${posClass}">${idx + 1}</div>
-          <div class="qi-name">${item.productName}</div>
-        </div>
-        <div class="qi-meta">
-          <span class="queue-chip">${item.sku}</span>
-          <span class="queue-chip qty">📦 ${item.qty} szt.</span>
-          ${item.deadline ? `<span class="queue-chip deadline${isUrgent?' urgent':''}">⏰ ${formatDate(item.deadline)}</span>` : ''}
-          <span class="queue-chip">${['','🔴 Wysoki','🟡 Normalny','🟢 Niski'][item.priority]}</span>
-          <span class="queue-chip">${item.addedBy === 'biuro' ? '💼 Biuro' : '🔨 Produkcja'}</span>
-          <span class="queue-chip" style="color:var(--muted)">${formatDateTime(item.addedAt)}</span>
-        </div>
-        <div class="qi-actions">
-          <button class="btn btn-success btn-sm" onclick="markDone('${item.id}')">✓ Wyprodukowano</button>
-          <button class="btn btn-danger btn-sm" onclick="removeQueueItem('${item.id}')">🗑</button>
-        </div>
+    sortedGroupKeys.forEach(gKey => {
+      const group = groups[gKey];
+      const groupLabel = group.size + (group.isTartan ? ' — Tartan' : ' — Standard');
+      const badgeClass = group.isTartan ? 'tartan' : 'standard';
+
+      html += `<div class="size-group-header">
+        <div class="size-group-title">${group.size}</div>
+        <span class="size-group-badge">${group.isTartan ? 'TARTAN' : 'STANDARD'}</span>
+        <span style="font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace">${group.items.length} szt.</span>
+        <div class="size-group-line"></div>
       </div>`;
+
+      html += `<div class="queue-list" style="margin-bottom:8px">`;
+      group.items.forEach(item => {
+        const posClass = item.priority === 1 ? 'high' : item.priority === 3 ? 'low' : '';
+        const isUrgent = item.deadline && new Date(item.deadline) < new Date(today.getTime() + 2 * 86400000);
+        const status = item.status || 'nowe';
+        const statusDef = getStatusDef(status);
+        const statusItemClass = 'status-' + status;
+
+        html += `<div class="queue-item ${statusItemClass} queue-item-clickable" id="qi-${item.id}" onclick="openOrderDetail('${item.id}')">
+          <div class="qi-top">
+            <div class="queue-pos ${posClass}">${globalIdx++}</div>
+            <div class="qi-name">${item.productName}</div>
+            <div class="status-wrap">
+              <button class="status-badge ${statusDef.cls}" onclick="event.stopPropagation();openStatusMenu('${item.id}', this)">
+                ${statusDef.icon} ${statusDef.label} ▾
+              </button>
+            </div>
+          </div>
+          <div class="qi-meta">
+            <span class="queue-chip">${item.sku}</span>
+            <span class="queue-chip qty">📦 ${item.qty} szt.</span>
+            ${item.deadline ? `<span class="queue-chip deadline${isUrgent?' urgent':''}">⏰ ${formatDate(item.deadline)}</span>` : ''}
+            <span class="queue-chip">${['','🔴 Wysoki','🟡 Normalny','🟢 Niski'][item.priority]}</span>
+            ${item.tartan ? `<span class="queue-chip tartan" style="background:${item.tartan.hex};color:white;font-weight:700">🏴 ${item.tartan.color}</span>` : ''}
+            <span class="queue-chip" style="color:var(--muted)">${formatDateTime(item.addedAt)}</span>
+          </div>
+          <div class="qi-actions">
+            <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();removeQueueItem('${item.id}')">🗑</button>
+          </div>
+        </div>`;
+      });
+      html += `</div>`;
     });
-    html += `</div>`;
   }
 
   if (done.length > 0) {
-    html += `<div class="section-title" style="margin-bottom:14px">Ukończone (${done.length})</div>`;
+    html += `<div class="size-group-header" style="margin-top:12px">
+      <div class="size-group-title" style="color:var(--muted)">ZAKOŃCZONE</div>
+      <span class="size-group-badge" style="background:var(--muted)">${done.length}</span>
+      <div class="size-group-line"></div>
+    </div>`;
     html += `<div class="queue-list">`;
     done.forEach(item => {
-      html += `<div class="queue-item done">
+      html += `<div class="queue-item done queue-item-clickable" id="qi-${item.id}" onclick="openOrderDetail('${item.id}')">
         <div class="qi-top">
           <div class="queue-pos" style="background:var(--muted)">✓</div>
-          <div class="qi-name" style="text-decoration:line-through;opacity:0.6">${item.productName}</div>
+          <div class="qi-name" style="text-decoration:line-through">${item.productName}</div>
+          <span class="status-badge status-zakonczone">✅ ZAKOŃCZONE</span>
         </div>
         <div class="qi-meta">
           <span class="queue-chip">${item.sku}</span>
           <span class="queue-chip qty">📦 ${item.qty} szt.</span>
-          ${item.doneAt ? `<span class="queue-chip">Ukończono: ${formatDateTime(item.doneAt)}</span>` : ''}
+          ${item.tartan ? `<span class="queue-chip tartan" style="background:${item.tartan.hex};color:white">🏴 ${item.tartan.color}</span>` : ''}
+          ${item.doneAt ? `<span class="queue-chip">✓ ${formatDateTime(item.doneAt)}</span>` : ''}
         </div>
         <div class="qi-actions">
-          <button class="btn btn-danger btn-sm" onclick="removeQueueItem('${item.id}')">🗑 Usuń</button>
+          <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();removeQueueItem('${item.id}')">🗑</button>
         </div>
       </div>`;
     });
@@ -1476,6 +2429,7 @@ function renderRecentOrders() {
         <span class="queue-chip">${o.sku}</span>
         <span class="queue-chip qty">📦 ${o.qty} szt.</span>
         <span class="queue-chip">${o.action === 'stock' ? '✓ Z magazynu' : '⚙ Do produkcji'}</span>
+        ${o.tartan ? `<span class="queue-chip tartan" style="background:${o.tartan.hex};color:white;font-weight:700">🏴 Tartan ${o.tartan.color}</span>` : ''}
         <span class="queue-chip">${o.by === 'biuro' ? '💼' : '🔨'} ${o.by === 'biuro' ? 'Biuro' : 'Produkcja'}</span>
       </div>
     </div>`).join('')}
@@ -1491,6 +2445,19 @@ function processOrder() {
   const deadline = document.getElementById('order-deadline').value;
   const resultDiv = document.getElementById('order-result');
 
+  // Walidacja tartanu — jeśli SKU zawiera -T, kolor musi być wybrany
+  const skuForCheck = document.getElementById('order-sku').value.trim().toUpperCase();
+  if (skuForCheck.includes('-T') && !tartanColor) {
+    const nameEl = document.getElementById('tartan-selected-name');
+    if (nameEl) { nameEl.textContent = '⚠ Wybierz kolor tartanu!'; nameEl.style.color = 'var(--red)'; }
+    // Pulse animation on dots
+    document.querySelectorAll('.tartan-dot').forEach(d => {
+      d.style.animation = 'none';
+      setTimeout(() => { d.style.animation = 'tartanPulse 0.4s ease 2'; }, 10);
+    });
+    return;
+  }
+
   if (!skuRaw) {
     document.getElementById('order-sku').classList.add('error');
     setTimeout(() => document.getElementById('order-sku').classList.remove('error'), 2000);
@@ -1498,6 +2465,8 @@ function processOrder() {
   }
 
   const product = products.find(p => p.sku === skuRaw);
+  const tartanInfo = tartanActive && tartanColor ? tartanColor : null;
+  const tartanLabel = tartanInfo ? ` + Tartan ${tartanInfo.color}` : '';
 
   if (!product) {
     resultDiv.innerHTML = `<div class="order-result">
@@ -1509,15 +2478,15 @@ function processOrder() {
 
   if (product.stock >= qty) {
     product.stock -= qty;
-    orderHistory.push({ id: uid(), sku: product.sku, productName: product.name, qty, time: new Date().toISOString(), action: 'stock', by: currentUser });
+    orderHistory.push({ id: uid(), sku: product.sku, productName: product.name, qty, time: new Date().toISOString(), action: 'stock', by: currentUser, tartan: tartanInfo });
     save();
 
     resultDiv.innerHTML = `<div class="order-result success">
       <div class="order-result-title">✅ Dostępne na stanie!</div>
-      <p><strong>${product.name}</strong> (${qty} szt.) wydano z magazynu.<br>Pozostało: <strong>${product.stock} szt.</strong></p>
+      <p><strong>${product.name}${tartanLabel}</strong> (${qty} szt.) wydano z magazynu.<br>Pozostało: <strong>${product.stock} szt.</strong></p>
     </div>`;
 
-    notify(`✓ Wydano ${qty} szt. z magazynu`);
+    notify(`✓ Wydano ${qty} szt. z magazynu${tartanLabel}`);
     scheduleClearForm();
   } else {
     const neededQty = qty - product.stock;
@@ -1532,18 +2501,20 @@ function processOrder() {
       deadline: deadline || null,
       addedAt: new Date().toISOString(),
       addedBy: currentUser,
+      tartan: tartanInfo,
+      status: 'nowe',
       done: false
     });
 
-    orderHistory.push({ id: uid(), sku: product.sku, productName: product.name, qty, time: new Date().toISOString(), action: 'queue', by: currentUser });
+    orderHistory.push({ id: uid(), sku: product.sku, productName: product.name, qty, time: new Date().toISOString(), action: 'queue', by: currentUser, tartan: tartanInfo });
     save();
 
     resultDiv.innerHTML = `<div class="order-result added">
       <div class="order-result-title">⚙ Dodano do kolejki produkcyjnej</div>
-      <p>Brak wystarczającego stanu.<br><strong>${neededQty} szt.</strong> dodano do kolejki.</p>
+      <p>Brak wystarczającego stanu.<br><strong>${neededQty} szt.${tartanLabel}</strong> dodano do kolejki.</p>
     </div>`;
 
-    notify(`⚙ ${product.name} — ${neededQty} szt. w kolejce`, 'warn');
+    notify(`⚙ ${product.name}${tartanLabel} — ${neededQty} szt. w kolejce`, 'warn');
     scheduleClearForm();
   }
 
@@ -1559,22 +2530,96 @@ function scheduleClearForm() {
     document.getElementById('order-deadline').value = '';
     document.getElementById('order-result').innerHTML = '';
     selectPrio(2);
+    resetTartan();
   }, 4000);
 }
 
 // ============================================================
 // QUEUE ACTIONS
 // ============================================================
-function markDone(id) {
+// STATUS DEFINITIONS
+const STATUSES = [
+  { key: 'nowe',          label: 'NOWE',          icon: '🆕', cls: 'status-nowe' },
+  { key: 'w-produkcji',   label: 'W PRODUKCJI',   icon: '⚙',  cls: 'status-w-produkcji' },
+  { key: 'tartanowanie',  label: 'DO TARTANOWANIA',icon: '🏴', cls: 'status-tartanowanie' },
+  { key: 'zakonczone',    label: 'ZAKOŃCZONE',     icon: '✅', cls: 'status-zakonczone' },
+];
+
+function getStatusDef(key) {
+  return STATUSES.find(s => s.key === key) || STATUSES[0];
+}
+
+function changeStatus(id, newStatus) {
+  closeAllStatusMenus();
   const item = queue.find(q => q.id === id);
   if (!item) return;
-  item.done = true;
-  item.doneAt = new Date().toISOString();
-  item.doneBy = currentUser;
-  save();
-  renderQueue();
-  renderStats();
-  notify(`✓ ${item.productName} — oznaczono jako wyprodukowane!`);
+
+  const oldStatus = item.status || 'nowe';
+
+  // Special flow for tartan items
+  if (newStatus === 'zakonczone') {
+    if (item.tartan && oldStatus === 'w-produkcji') {
+      // Tartan item in W PRODUKCJI → goes to DO TARTANOWANIA first
+      item.status = 'tartanowanie';
+      save(); renderQueue(); renderStats();
+      notify(`🏴 ${item.productName} — wymaga tartanowania!`, 'warn');
+      return;
+    }
+    // Final completion: update stock
+    item.status = 'zakonczone';
+    item.done = true;
+    item.doneAt = new Date().toISOString();
+    item.doneBy = currentUser;
+    const product = products.find(p => p.sku === item.sku);
+    if (product) product.stock += item.qty;
+    save(); renderQueue(); renderStock(); renderStats();
+    notify(`✅ ${item.productName} — zakończono! Magazyn: +${item.qty} szt.`);
+    return;
+  }
+
+  item.status = newStatus;
+  save(); renderQueue(); renderStats();
+  const def = getStatusDef(newStatus);
+  notify(`${def.icon} ${item.productName} — ${def.label}`);
+}
+
+function openStatusMenu(id, el) {
+  closeAllStatusMenus();
+  const item = queue.find(q => q.id === id);
+  if (!item) return;
+
+  const currentStatus = item.status || 'nowe';
+  const isTartan = !!item.tartan;
+
+  let menuHtml = '';
+  STATUSES.forEach(s => {
+    // Hide tartanowanie option for non-tartan items
+    if (s.key === 'tartanowanie' && !isTartan) return;
+    const isActive = s.key === currentStatus;
+    menuHtml += `<div class="status-menu-item ${isActive ? 'active' : ''}" onclick="changeStatus('${id}','${s.key}')">
+      ${s.icon} ${s.label} ${isActive ? '✓' : ''}
+    </div>`;
+  });
+
+  const menu = document.createElement('div');
+  menu.className = 'status-menu';
+  menu.id = 'smenu-' + id;
+  menu.innerHTML = menuHtml;
+
+  el.closest('.status-wrap').appendChild(menu);
+
+  setTimeout(() => {
+    document.addEventListener('click', closeAllStatusMenus, { once: true });
+  }, 10);
+}
+
+function closeAllStatusMenus() {
+  document.querySelectorAll('.status-menu').forEach(m => m.remove());
+}
+
+function markDone(id) {
+  // Legacy — now handled by changeStatus
+  changeStatus(id, 'zakonczone');
 }
 
 function removeQueueItem(id) {
@@ -1616,7 +2661,7 @@ function updateStock(productId) {
 function openAddProduct() {
   editingProductId = null;
   document.getElementById('modal-product-title').textContent = 'Dodaj produkt';
-  ['p-sku','p-name','p-desc','p-price'].forEach(id => document.getElementById(id).value = '');
+  ['p-sku','p-name','p-desc','p-price','p-a-w','p-a-l','p-b-w','p-b-l','p-c-w','p-c-l'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('p-stock').value = '0';
   document.getElementById('p-min').value = '2';
   document.getElementById('p-sku').disabled = false;
@@ -1635,6 +2680,13 @@ function openEditProduct(id) {
   document.getElementById('p-stock').value = p.stock;
   document.getElementById('p-min').value = p.minStock;
   document.getElementById('p-sku').disabled = true;
+  const d = p.dims || {};
+  document.getElementById('p-a-w').value = d.aW || '';
+  document.getElementById('p-a-l').value = d.aL || '';
+  document.getElementById('p-b-w').value = d.bW || '';
+  document.getElementById('p-b-l').value = d.bL || '';
+  document.getElementById('p-c-w').value = d.cW || '';
+  document.getElementById('p-c-l').value = d.cL || '';
   document.getElementById('modal-product').style.display = 'flex';
 }
 
@@ -1645,20 +2697,29 @@ function saveProduct() {
   const price = parseFloat(document.getElementById('p-price').value) || 0;
   const stock = parseInt(document.getElementById('p-stock').value) || 0;
   const minStock = parseInt(document.getElementById('p-min').value) || 0;
+  const dims = {
+    aW: document.getElementById('p-a-w').value || '',
+    aL: document.getElementById('p-a-l').value || '',
+    bW: document.getElementById('p-b-w').value || '',
+    bL: document.getElementById('p-b-l').value || '',
+    cW: document.getElementById('p-c-w').value || '',
+    cL: document.getElementById('p-c-l').value || '',
+  };
+  const hasDims = Object.values(dims).some(v => v !== '');
 
   if (!sku) { document.getElementById('p-sku').classList.add('error'); return; }
   if (!name) { document.getElementById('p-name').classList.add('error'); return; }
 
   if (editingProductId) {
     const p = products.find(p => p.id === editingProductId);
-    if (p) Object.assign(p, { name, desc, price, stock, minStock });
+    if (p) Object.assign(p, { name, desc, price, stock, minStock, dims: hasDims ? dims : null });
   } else {
     if (products.find(p => p.sku === sku)) {
       notify('SKU już istnieje!', 'error');
       document.getElementById('p-sku').classList.add('error');
       return;
     }
-    products.push({ id: uid(), sku, name, desc, price, stock, minStock });
+    products.push({ id: uid(), sku, name, desc, price, stock, minStock, dims: hasDims ? dims : null });
   }
 
   save();
@@ -1682,6 +2743,10 @@ function deleteProduct(id) {
 function skuAutocomplete(val) {
   const dd = document.getElementById('sku-dropdown');
   const v = val.trim().toUpperCase();
+
+  // Auto-show/hide tartan color picker based on -T in SKU
+  checkTartanFromSku(v);
+
   if (!v) { dd.style.display = 'none'; return; }
 
   const matches = products.filter(p =>
@@ -1703,9 +2768,28 @@ function skuAutocomplete(val) {
   dd.style.display = 'block';
 }
 
+function checkTartanFromSku(sku) {
+  const isTartan = sku.includes('-T');
+  const group = document.getElementById('tartan-group');
+  if (!group) return;
+
+  if (isTartan) {
+    group.style.display = 'block';
+    tartanActive = true;
+  } else {
+    group.style.display = 'none';
+    tartanActive = false;
+    tartanColor = null;
+    document.querySelectorAll('.tartan-dot').forEach(d => d.classList.remove('selected'));
+    const nameEl = document.getElementById('tartan-selected-name');
+    if (nameEl) nameEl.textContent = '';
+  }
+}
+
 function selectSkuOption(sku) {
   document.getElementById('order-sku').value = sku;
   document.getElementById('sku-dropdown').style.display = 'none';
+  checkTartanFromSku(sku.toUpperCase());
 }
 
 function closeSkuDropdown() {
@@ -1720,6 +2804,501 @@ function skuKeydown(e) {
 // ============================================================
 // HELPERS
 // ============================================================
+
+
+// ============================================================
+// QUEUE FILTER
+// ============================================================
+function setQueueFilter(f) {
+  queueFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === f);
+  });
+  renderQueue();
+}
+
+function updateFilterCounts() {
+  const counts = { wszystkie: 0, nowe: 0, 'w-produkcji': 0, tartanowanie: 0, zakonczone: 0 };
+  queue.forEach(item => {
+    const s = item.status || 'nowe';
+    counts.wszystkie++;
+    if (counts[s] !== undefined) counts[s]++;
+  });
+  Object.keys(counts).forEach(k => {
+    const el = document.getElementById('fc-' + k);
+    if (el) el.textContent = counts[k];
+  });
+}
+
+
+// ============================================================
+// ORDER DETAIL MODAL
+// ============================================================
+function openOrderDetail(id) {
+  const item = queue.find(q => q.id === id);
+  if (!item) return;
+  detailOrderId = id;
+
+  const statusDef = getStatusDef(item.status || 'nowe');
+  const isTartan = !!item.tartan;
+
+  // Build status buttons
+  let statusBtns = '';
+  STATUSES.forEach(s => {
+    if (s.key === 'tartanowanie' && !isTartan) return;
+    const isActive = (item.status || 'nowe') === s.key;
+    statusBtns += `<button class="status-option-btn ${isActive ? 'active-status' : ''}" data-s="${s.key}" onclick="setDetailStatus('${s.key}')">${s.icon} ${s.label}</button>`;
+  });
+
+  // Plywood dims from product
+  const product = products.find(p => p.sku === item.sku);
+  let dimsHtml = '';
+  if (product && product.dims) {
+    const d = product.dims;
+    dimsHtml = `<div class="order-detail-section">
+      <div class="order-detail-section-title">📐 Wymiary sklejki</div>
+      ${d.aW || d.aL ? `<div class="order-detail-row"><span class="odr-label">Element A</span><span class="odr-value">${d.aW||'—'} × ${d.aL||'—'} cm</span></div>` : ''}
+      ${d.bW || d.bL ? `<div class="order-detail-row"><span class="odr-label">Element B</span><span class="odr-value">${d.bW||'—'} × ${d.bL||'—'} cm</span></div>` : ''}
+      ${d.cW || d.cL ? `<div class="order-detail-row"><span class="odr-label">Wieko</span><span class="odr-value">${d.cW||'—'} × ${d.cL||'—'} cm</span></div>` : ''}
+    </div>`;
+  }
+
+  document.getElementById('modal-order-body').innerHTML = `
+    <div class="order-detail-header">
+      <div>
+        <div class="order-detail-name">${item.productName}</div>
+        <div class="order-detail-chips">
+          <span class="queue-chip">${item.sku}</span>
+          <span class="queue-chip qty">📦 ${item.qty} szt.</span>
+          ${item.tartan ? `<span class="queue-chip" style="background:${item.tartan.hex};color:white;font-weight:700">🏴 Tartan ${item.tartan.color}</span>` : ''}
+          ${item.deadline ? `<span class="queue-chip deadline">⏰ ${formatDate(item.deadline)}</span>` : ''}
+        </div>
+      </div>
+    </div>
+
+    <div class="order-detail-section">
+      <div class="order-detail-section-title">📋 Informacje</div>
+      <div class="order-detail-row">
+        <span class="odr-label">Priorytet</span>
+        <span class="odr-value">${['','🔴 Wysoki','🟡 Normalny','🟢 Niski'][item.priority]}</span>
+      </div>
+      <div class="order-detail-row">
+        <span class="odr-label">Dodano</span>
+        <span class="odr-value">${formatDateTime(item.addedAt)}</span>
+      </div>
+      <div class="order-detail-row">
+        <span class="odr-label">Przez</span>
+        <span class="odr-value">${item.addedBy === 'biuro' ? '💼 Biuro' : '🔨 Produkcja'}</span>
+      </div>
+      ${item.doneAt ? `<div class="order-detail-row"><span class="odr-label">Ukończono</span><span class="odr-value">${formatDateTime(item.doneAt)}</span></div>` : ''}
+    </div>
+
+    ${dimsHtml}
+
+    <div class="order-detail-section">
+      <div class="order-detail-section-title">🔄 Status zlecenia</div>
+      <div class="status-select-row" id="detail-status-row">${statusBtns}</div>
+    </div>
+
+    <div class="order-detail-section">
+      <div class="order-detail-section-title">📝 Notatki</div>
+      <textarea class="order-notes-area" id="order-notes-input" placeholder="Dodaj notatki do zlecenia...">${item.notes || ''}</textarea>
+    </div>
+  `;
+
+  document.getElementById('modal-order').style.display = 'flex';
+}
+
+function setDetailStatus(newStatus) {
+  const item = queue.find(q => q.id === detailOrderId);
+  if (!item) return;
+
+  const wasZakonczone = item.done;
+  const product = products.find(p => p.sku === item.sku);
+
+  // Cofnięcie ze statusu ZAKOŃCZONE — odejmij ze stanu magazynu
+  if (wasZakonczone && newStatus !== 'zakonczone') {
+    if (product && product.stock >= item.qty) {
+      product.stock -= item.qty;
+    }
+    item.done = false;
+    item.doneAt = null;
+  }
+
+  // Przejście do ZAKOŃCZONE
+  if (newStatus === 'zakonczone' && !wasZakonczone) {
+    // Tartan flow: W PRODUKCJI → DO TARTANOWANIA (nie zakończone)
+    if (item.tartan && (item.status || 'nowe') === 'w-produkcji') {
+      newStatus = 'tartanowanie';
+    } else {
+      item.done = true;
+      item.doneAt = new Date().toISOString();
+      if (product) product.stock += item.qty;
+    }
+  }
+
+  item.status = newStatus;
+
+  // Update buttons in modal
+  document.querySelectorAll('.status-option-btn').forEach(b => {
+    b.classList.toggle('active-status', b.dataset.s === newStatus);
+  });
+
+  save(); renderQueue(); renderStock(); renderStats();
+  const def = getStatusDef(newStatus);
+  notify(`${def.icon} Status: ${def.label}`);
+}
+
+function saveOrderDetail() {
+  const item = queue.find(q => q.id === detailOrderId);
+  if (!item) return;
+  const notes = document.getElementById('order-notes-input').value.trim();
+  item.notes = notes;
+  save();
+  closeModal('modal-order');
+  notify('💾 Notatki zapisane');
+}
+
+
+// ============================================================
+// POS STATE
+// ============================================================
+let posBasket = [];     // [{ productId, sku, name, qty, priority, tartan }]
+let posClientActive = false;
+let posOrders = [];     // saved POS orders
+
+function loadPosOrders() {
+  try { const v = localStorage.getItem('sg-pos-orders'); if (v) posOrders = JSON.parse(v); } catch(e) { posOrders = []; }
+}
+function savePosOrders() {
+  try { localStorage.setItem('sg-pos-orders', JSON.stringify(posOrders)); } catch(e){}
+}
+
+// ============================================================
+// POS OPEN / CLOSE
+// ============================================================
+function openPOS() {
+  posBasket = [];
+  posClientActive = false;
+  document.getElementById('pos-client-check').classList.remove('on');
+  document.getElementById('pos-client-fields').classList.remove('visible');
+  ['pos-name','pos-phone','pos-email','pos-address'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('pos-search').value = '';
+  renderPosProducts('');
+  renderPosBasket();
+  document.getElementById('modal-pos').style.display = 'flex';
+}
+
+function togglePosClient() {
+  posClientActive = !posClientActive;
+  document.getElementById('pos-client-check').classList.toggle('on', posClientActive);
+  document.getElementById('pos-client-fields').classList.toggle('visible', posClientActive);
+}
+
+// ============================================================
+// POS PRODUCTS LIST
+// ============================================================
+function renderPosProducts(filter) {
+  const grid = document.getElementById('pos-product-grid');
+  if (!grid) return;
+  const f = (filter || '').trim().toUpperCase();
+  const list = f
+    ? products.filter(p => p.sku.includes(f) || p.name.toUpperCase().includes(f))
+    : products;
+
+  if (!list.length) {
+    grid.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:0.82rem">Brak produktów w katalogu</div>';
+    return;
+  }
+
+  grid.innerHTML = list.map(p => {
+    const isTartan = p.sku.includes('-T');
+    const stockColor = p.stock === 0 ? 'var(--red)' : p.stock <= p.minStock ? 'var(--amber)' : 'var(--muted)';
+    return `<div class="pos-product-row${p.stock === 0 ? ' out-of-stock' : ''}" onclick="addToBasket('${p.id}')">
+      <div class="pos-product-info">
+        <div class="pos-product-name">${p.name}</div>
+        <div class="pos-product-sku">${p.sku}${isTartan ? ' 🏴' : ''}</div>
+      </div>
+      <span class="pos-product-stock" style="color:${stockColor}">${p.stock} szt.</span>
+      <button class="pos-add-btn" onclick="event.stopPropagation();addToBasket('${p.id}')">+</button>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// BASKET
+// ============================================================
+const TARTAN_COLORS = [
+  { color: 'Różowy',      hex: '#e91e8c' },
+  { color: 'Niebieski',   hex: '#1565c0' },
+  { color: 'Pomarańczowy',hex: '#e65100' },
+  { color: 'Fioletowy',   hex: '#6a1b9a' },
+  { color: 'Czerwony',    hex: '#c62828' },
+];
+
+function addToBasket(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+  const existing = posBasket.find(b => b.productId === productId);
+  if (existing) {
+    existing.qty++;
+  } else {
+    posBasket.push({
+      productId,
+      sku: product.sku,
+      name: product.name,
+      qty: 1,
+      priority: 2,
+      tartan: product.sku.includes('-T') ? null : undefined, // null = tartan required, undefined = not tartan
+    });
+  }
+  renderPosBasket();
+}
+
+function removeFromBasket(productId) {
+  posBasket = posBasket.filter(b => b.productId !== productId);
+  renderPosBasket();
+}
+
+function changePosQty(productId, delta) {
+  const item = posBasket.find(b => b.productId === productId);
+  if (!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  renderPosBasket();
+}
+
+function setPosPriority(productId, prio) {
+  const item = posBasket.find(b => b.productId === productId);
+  if (item) item.priority = prio;
+  renderPosBasket();
+}
+
+function setPosTartan(productId, hex, color) {
+  const item = posBasket.find(b => b.productId === productId);
+  if (item) item.tartan = { hex, color };
+  renderPosBasket();
+}
+
+function renderPosBasket() {
+  const list = document.getElementById('pos-basket-list');
+  const count = document.getElementById('pos-basket-count');
+  if (!list) return;
+
+  const total = posBasket.reduce((s, b) => s + b.qty, 0);
+  if (count) count.textContent = total > 0 ? `${total} szt.` : '';
+
+  if (!posBasket.length) {
+    list.innerHTML = '<div class="pos-basket-empty">Kliknij produkty aby dodać</div>';
+    return;
+  }
+
+  list.innerHTML = posBasket.map(item => {
+    const isTartan = item.tartan !== undefined; // undefined means not a tartan product
+    const tartanDots = isTartan ? TARTAN_COLORS.map(tc =>
+      `<div class="pos-tartan-dot${item.tartan && item.tartan.hex === tc.hex ? ' selected' : ''}"
+        style="background:${tc.hex}" title="${tc.color}"
+        onclick="setPosTartan('${item.productId}','${tc.hex}','${tc.color}')"></div>`
+    ).join('') : '';
+
+    const tartanStatus = isTartan
+      ? (item.tartan
+          ? `<span style="font-size:0.65rem;font-weight:700;color:${item.tartan.hex}">🏴 ${item.tartan.color}</span>`
+          : `<span style="font-size:0.65rem;color:var(--red);font-weight:600">⚠ Wybierz kolor tartanu</span>`)
+      : '';
+
+    return `<div class="pos-basket-item">
+      <div class="pos-basket-item-info">
+        <div class="pos-basket-item-name">${item.name}</div>
+        <div class="pos-basket-item-sku">${item.sku}</div>
+        ${isTartan ? `<div class="pos-tartan-dots">${tartanDots}</div>` : ''}
+        ${tartanStatus ? `<div style="margin-top:2px">${tartanStatus}</div>` : ''}
+        <div class="pos-prio-select">
+          <button class="pos-prio-btn${item.priority===1?' sel-1':''}" onclick="setPosPriority('${item.productId}',1)">🔴</button>
+          <button class="pos-prio-btn${item.priority===2?' sel-2':''}" onclick="setPosPriority('${item.productId}',2)">🟡</button>
+          <button class="pos-prio-btn${item.priority===3?' sel-3':''}" onclick="setPosPriority('${item.productId}',3)">🟢</button>
+        </div>
+      </div>
+      <div class="pos-qty-ctrl">
+        <button onclick="changePosQty('${item.productId}',-1)">−</button>
+        <span>${item.qty}</span>
+        <button onclick="changePosQty('${item.productId}',1)">+</button>
+      </div>
+      <button class="pos-remove-btn" onclick="removeFromBasket('${item.productId}')">✕</button>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// SUBMIT POS ORDER
+// ============================================================
+function submitPosOrder() {
+  if (!posBasket.length) { notify('Koszyk jest pusty!', 'error'); return; }
+
+  // Validate tartan colors
+  const missingTartan = posBasket.filter(b => b.tartan === null); // null = required but not set
+  if (missingTartan.length) {
+    notify(`⚠ Wybierz kolor tartanu dla: ${missingTartan.map(b=>b.name).join(', ')}`, 'error');
+    return;
+  }
+
+  // Collect client data
+  let client = null;
+  if (posClientActive) {
+    client = {
+      name:    document.getElementById('pos-name').value.trim(),
+      phone:   document.getElementById('pos-phone').value.trim(),
+      email:   document.getElementById('pos-email').value.trim(),
+      address: document.getElementById('pos-address').value.trim(),
+    };
+  }
+
+  const orderId = uid();
+  const orderTime = new Date().toISOString();
+
+  // Save POS order
+  const posOrder = {
+    id: orderId,
+    createdAt: orderTime,
+    createdBy: currentUser,
+    client,
+    items: posBasket.map(b => ({ ...b })),
+  };
+  loadPosOrders();
+  posOrders.unshift(posOrder);
+  savePosOrders();
+
+  // Split into individual queue items
+  let addedCount = 0;
+  posBasket.forEach(item => {
+    const product = products.find(p => p.id === item.productId);
+    if (!product) return;
+
+    const needQty = item.qty;
+    const fromStock = Math.min(product.stock, needQty);
+    const toQueue = needQty - fromStock;
+    product.stock -= fromStock;
+
+    if (toQueue > 0) {
+      queue.push({
+        id: uid(),
+        sku: product.sku,
+        productName: product.name,
+        qty: toQueue,
+        priority: item.priority,
+        deadline: null,
+        addedAt: orderTime,
+        addedBy: currentUser,
+        tartan: item.tartan || null,
+        status: 'nowe',
+        done: false,
+        posOrderId: orderId,
+        clientName: client ? client.name : null,
+      });
+      addedCount++;
+    }
+
+    orderHistory.push({
+      id: uid(),
+      sku: product.sku,
+      productName: product.name,
+      qty: needQty,
+      time: orderTime,
+      action: toQueue > 0 ? 'queue' : 'stock',
+      by: currentUser,
+      tartan: item.tartan || null,
+      posOrderId: orderId,
+    });
+  });
+
+  save();
+  render();
+  renderPosOrdersList();
+  closeModal('modal-pos');
+
+  const msg = addedCount > 0
+    ? `✓ Zamówienie POS zapisane — ${addedCount} pozycji dodano do kolejki`
+    : `✓ Zamówienie POS zapisane — wszystko dostępne na stanie`;
+  notify(msg);
+}
+
+// ============================================================
+// POS ORDERS LIST
+// ============================================================
+function renderPosOrdersList() {
+  loadPosOrders();
+  const container = document.getElementById('pos-orders-container');
+  if (!container) return;
+
+  if (!posOrders.length) {
+    container.innerHTML = `<div class="empty">
+      <div class="empty-icon">🛒</div>
+      <div class="empty-title">Brak zamówień POS</div>
+      <div class="empty-sub">Kliknij "+ Nowe zamówienie POS" aby dodać</div>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = posOrders.map(order => {
+    const c = order.client;
+    const clientHtml = c && c.name
+      ? `<div class="pos-order-client-name">👤 ${c.name}</div>
+         <div class="pos-order-meta">${[c.phone,c.email,c.address].filter(Boolean).join(' · ')}</div>`
+      : `<div class="pos-order-client-name" style="color:var(--muted)">Klient anonimowy</div>`;
+
+    const itemsHtml = order.items.map(it =>
+      `<div class="pos-order-item-row">
+        <span class="sku-badge" style="font-size:0.62rem">${it.sku}</span>
+        <span>${it.name}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem">×${it.qty}</span>
+        ${it.tartan ? `<span style="background:${it.tartan.hex};color:white;font-size:0.65rem;font-weight:700;padding:1px 7px;border-radius:10px">🏴 ${it.tartan.color}</span>` : ''}
+      </div>`
+    ).join('');
+
+    return `<div class="pos-order-card">
+      <div class="pos-order-card-header">
+        <div>${clientHtml}</div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-size:0.68rem;color:var(--muted);font-family:'JetBrains Mono',monospace">${formatDateTime(order.createdAt)}</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:2px">${order.items.reduce((s,i)=>s+i.qty,0)} szt. · ${order.createdBy==='biuro'?'💼':'🔨'}</div>
+        </div>
+      </div>
+      <div class="pos-order-items">${itemsHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+
+// ============================================================
+// TARTAN
+// ============================================================
+// toggleTartan no longer used — tartan auto-detected from SKU containing "-T"
+function toggleTartan() {}
+
+function selectTartan(el) {
+  event.stopPropagation();
+  document.querySelectorAll('.tartan-dot').forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+  tartanColor = { color: el.dataset.color, hex: el.dataset.hex };
+
+  const nameEl = document.getElementById('tartan-selected-name');
+  if (nameEl) {
+    nameEl.textContent = '✓ Wybrany kolor: ' + el.dataset.color;
+    nameEl.style.color = 'var(--accent-mid)';
+  }
+}
+
+function resetTartan() {
+  tartanActive = false;
+  tartanColor = null;
+  const group = document.getElementById('tartan-group');
+  if (group) group.style.display = 'none';
+  document.querySelectorAll('.tartan-dot').forEach(d => d.classList.remove('selected'));
+  const nameEl = document.getElementById('tartan-selected-name');
+  if (nameEl) nameEl.textContent = '';
+}
+
 function selectPrio(p) {
   selectedPrio = p;
   document.querySelectorAll('.prio-opt').forEach(el =>
